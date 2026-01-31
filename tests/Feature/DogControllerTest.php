@@ -10,7 +10,7 @@ use Tests\TestCase;
 
 class DogControllerTest extends TestCase
 {
-    private static array $MOCK_DATA = [['id' => 1,'name' => 'Affenpinscher']];
+    private static array $MOCK_DATA = [['id' => 1,'name' => 'Affenpinscher'], ['id' => 2, 'name' => 'American Bully'], ['id' => 3, 'name' => 'Boerboel']];
     private MockObject $mockDogService;
     public function setUp(): void
     {
@@ -38,6 +38,7 @@ class DogControllerTest extends TestCase
 
     }
 
+    #[Test]
     public function test_index_handles_exception()
     {
         $this->mockDogService
@@ -47,7 +48,26 @@ class DogControllerTest extends TestCase
         $this->get(route('dogs.index'))
             ->assertStatus(Response::HTTP_OK)
             ->assertViewIs('dogs.index')
-            ->assertViewHas('error', 'Rate Limit Exceeded');
+            ->assertViewHas('error', 'Looks like something has gone wrong on our side, we\'ll fix it as soon as possible');
+
+
+    }
+
+    #[Test]
+    public function test_index_can_filter_search()
+    {
+        $dogs = collect(self::$MOCK_DATA)->map(fn($dog) => Dog::fromApi($dog));
+
+        $this->mockDogService
+            ->method('getAllDogs')
+            ->willReturn($dogs);
+
+        $this->get(route('dogs.index', ['search' => 'American']))
+            ->assertStatus(Response::HTTP_OK)
+            ->assertViewIs('dogs.index')
+            ->assertViewHas('dogs', function($viewDogs) use ($dogs) {
+                return count($viewDogs) === 1;
+            });
 
 
     }
