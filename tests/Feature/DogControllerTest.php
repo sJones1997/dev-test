@@ -6,6 +6,7 @@ use App\Dogs\Dog;
 use App\Dogs\DogService;
 use PHPUnit\Framework\MockObject\MockObject;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Tests\TestCase;
 
 class DogControllerTest extends TestCase
@@ -69,6 +70,39 @@ class DogControllerTest extends TestCase
                 return count($viewDogs) === 1;
             });
 
+    }
+
+    #[Test]
+    public function test_show_returns_a_dog()
+    {
+        $dog = Dog::fromApi(self::$MOCK_DATA[0]);
+
+        $this->mockDogService
+            ->method('getDogById')
+            ->willReturn($dog);
+
+        $this->get(route('dogs.show', ['dogId' => $dog->id]))
+            ->assertStatus(Response::HTTP_OK)
+            ->assertViewIs('dogs.show')
+            ->assertViewHas('dog', function ($viewDog) use ($dog) {
+                return $viewDog->id === $dog->id;
+            });
+
+    }
+
+    #[Test]
+    public function test_throws_exception_when_dog_is_not_found()
+    {
+        $dog = Dog::fromApi(self::$MOCK_DATA[0]);
+
+        $this->mockDogService
+            ->method('getDogById')
+            ->willThrowException(new NotFoundHttpException('"Dog with id 1000 not found"'));
+
+        $this->get(route('dogs.show', ['dogId' => $dog->id]))
+            ->assertStatus(Response::HTTP_OK)
+            ->assertViewIs('dogs.show')
+            ->assertViewHas('error', 'We were unable to find the dog you were looking for.');
 
     }
 
