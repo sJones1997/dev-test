@@ -38,13 +38,9 @@
 
             const titles = [
                 "Looking for a Dog Breed?",
-                "Searching for a Cat Breed?",
                 "What Dog Breed Fits You?",
-                "Find Your Perfect Feline Companion",
-                "Explore Cat Breeds by Trait",
                 "Discover Rare Dog Breeds",
                 "Which Breed is Right for Your Family?",
-                "Find Cat Breeds with Unique Traits",
                 "Discover Dogs by Size and Temperament"
             ];
 

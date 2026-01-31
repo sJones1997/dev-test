@@ -1,7 +1,10 @@
+
+# I had to use a custom Composer image with PHP 8.4 because the default composer/composer image
+# uses PHP 8.5, which is incompatible with our composer.lock dependencies.
 composer:
 	 docker run --rm --interactive --tty \
       --volume $(shell pwd):/app \
-      composer/composer install
+      composer-php84 install
 setup:
 	if [ ! -f .env ]; then cp .env.example .env; fi
 	make composer
