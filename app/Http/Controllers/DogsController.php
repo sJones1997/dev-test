@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Dogs\Dog;
 use App\Dogs\DogService;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Illuminate\View\View;
 
 class DogsController extends Controller
@@ -10,13 +13,25 @@ class DogsController extends Controller
 
     public function __construct(private DogService $service){}
 
-    public function index(): View
+    public function index(Request $request): View
     {
         try {
             $dogs = $this->service->getAllDogs();
-            return view('dogs.index', compact('dogs'));
+
+            if($searchTerm = $request->get('search')){
+                $dogs = $dogs->filter(fn(Dog $dog) => str_contains(strtolower($dog->name), strtolower($searchTerm)));
+            }
+
+            return view('dogs.index', compact(['dogs']));
         } catch (\Exception $e){
-            return view('dogs.index', ['error' => $e->getMessage(), 'dogs' => []]);
+
+            Log::error('Dog API request failed', [
+                'message'   => $e->getMessage(),
+                'method' => 'DogsController@index'
+            ]);
+
+            return view('dogs.index', ['error' => 'Looks like something has gone wrong on our side, we\'ll fix it as soon as possible', 'dogs' => []]);
         }
     }
+
 }
