@@ -58,7 +58,7 @@ class DogServiceTest extends TestCase
     #[Test]
     public function test_exception_is_thrown_when_rate_limit_is_reached()
     {
-        Cache::forget('dog_index');
+        Cache::forget('c_dog_index');
 
         RateLimiter::shouldReceive('attempt')
             ->once()
