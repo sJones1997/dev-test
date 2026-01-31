@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Integration;
+namespace Tests\Unit;
 
 use App\Dogs\DogHttpConnector;
 use Illuminate\Support\Facades\Http;
@@ -37,7 +37,7 @@ class DogHttpConnectorTest extends TestCase
             config('services.dog_api.url') => Http::response($mockData, Response::HTTP_OK)
         ]);
 
-        $dogs = $this->testSubject->getAllDogs();
+        $dogs = $this->testSubject->fetchAllDogs();
 
         $this->assertEquals($dogs, $mockData);
     }
@@ -49,7 +49,7 @@ class DogHttpConnectorTest extends TestCase
             config('services.dog_api.url') => Http::response(null, Response::HTTP_OK)
         ]);
 
-        $dogs = $this->testSubject->getAllDogs();
+        $dogs = $this->testSubject->fetchAllDogs();
 
         $this->assertEquals([], $dogs);
 
@@ -66,7 +66,7 @@ class DogHttpConnectorTest extends TestCase
         $this->expectException(\RuntimeException::class);
         $this->expectExceptionMessage('Downstream API Error');
 
-        $this->testSubject->getAllDogs();
+        $this->testSubject->fetchAllDogs();
 
     }
 
