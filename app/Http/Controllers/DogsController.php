@@ -38,7 +38,7 @@ class DogsController extends Controller
 
     public function show(int $dogId): View
     {
-            try {
+        try {
 
             $dog = $this->service->getDogById($dogId);
             return view('dogs.show',compact('dog'));
