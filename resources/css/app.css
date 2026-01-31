@@ -23,7 +23,7 @@
 }
 
 body, html {
-    height: 100%;
+    min-height: 100vh;
     margin: 0;
     padding: 20px;
     display: flex;
@@ -135,4 +135,23 @@ input.dark-mode::placeholder {
 .form-control:focus {
     border-color: var(--accent-color) !important;
     box-shadow: 0 0 0 .25rem rgba(0, 173, 181, .25) !important;
+}
+
+.card-image-fixed {
+    width: 100% !important;
+    height: 200px;
+    object-fit: cover;
+}
+
+#searchInput {
+    padding: 10px 22px;
+    border-color: var(--primary-bg-color-dark);
+    min-width: 500px;
+    margin-bottom: 2em;
+}
+
+.searchInput-icon {
+    right: 22px;
+    top: 50%;
+    transform: translateY(-50%);
 }
