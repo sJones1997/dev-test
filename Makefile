@@ -21,3 +21,5 @@ mysql-ready:
 reset:
 	./vendor/bin/sail down -v
 	make setup
+test:
+	./vendor/bin/sail php artisan test

@@ -2,21 +2,6 @@
 
 @section('title', 'Home')
 
-@push('style')
-    <style>
-        #searchInput {
-            padding: 10px 22px;
-            border-color: var(--primary-bg-color-dark);
-            min-width: 350px;
-        }
-
-        .searchInput-icon {
-            right: 22px;
-            top: 50%;
-            transform: translateY(-50%);
-        }
-    </style>
-@endpush
 
 @section('content')
     <h3 class="typewriter mb-4">
