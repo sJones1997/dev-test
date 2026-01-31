@@ -2,21 +2,6 @@
 
 @section('title', 'Home')
 
-@push('style')
-    <style>
-        #searchInput {
-            padding: 10px 22px;
-            border-color: var(--primary-bg-color-dark);
-            min-width: 350px;
-        }
-
-        .searchInput-icon {
-            right: 22px;
-            top: 50%;
-            transform: translateY(-50%);
-        }
-    </style>
-@endpush
 
 @section('content')
     <h3 class="typewriter mb-4">
@@ -38,13 +23,9 @@
 
             const titles = [
                 "Looking for a Dog Breed?",
-                "Searching for a Cat Breed?",
                 "What Dog Breed Fits You?",
-                "Find Your Perfect Feline Companion",
-                "Explore Cat Breeds by Trait",
                 "Discover Rare Dog Breeds",
                 "Which Breed is Right for Your Family?",
-                "Find Cat Breeds with Unique Traits",
                 "Discover Dogs by Size and Temperament"
             ];
 

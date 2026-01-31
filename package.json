@@ -3,7 +3,8 @@
   "type": "commonjs",
   "scripts": {
     "build": "vite build",
-    "dev": "vite"
+    "dev": "vite",
+    "watch": "mix watch"
   },
   "devDependencies": {
     "axios": "^1.7.4",
