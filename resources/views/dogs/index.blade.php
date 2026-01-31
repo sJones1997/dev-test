@@ -40,7 +40,9 @@
                             <div class="card-body d-flex flex-column">
                                 <h5 class="card-title">{{$dog->name}}</h5>
                                 <p class="card-text">{{$dog->description}}</p>
-                                <button class="btn btn-primary btn-sm mt-auto">Find out more</button>
+                                <a href="{{ route('dogs.show', $dog->id) }}" class="btn btn-primary btn-sm mt-auto">
+                                    Find out more
+                                </a>
                             </div>
                         </div>
                     </div>

@@ -5,6 +5,7 @@ namespace App\Dogs;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\RateLimiter;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 readonly class DogService
 {
@@ -34,5 +35,11 @@ readonly class DogService
         );
 
         return collect($results)->map(fn(array $data) => Dog::fromApi($data));
+    }
+
+    public function getDogById(int $dogId): Dog
+    {
+        return $this->getAllDogs()->first(fn(Dog $dog) => $dog->id === $dogId)
+            ?? throw new NotFoundHttpException("Dog with id $dogId not found");
     }
 }
